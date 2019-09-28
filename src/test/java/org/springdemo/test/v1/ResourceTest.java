@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springdemo.core.io.ClassPathResource;
+import org.springdemo.core.io.FileSystemResource;
 import org.springdemo.core.io.Resource;
 
 public class ResourceTest {
@@ -30,8 +31,9 @@ public class ResourceTest {
 
 	@Test
 	public void testFileSystemResource() throws Exception {
-
-		/*Resource r = new FileSystemResource("C:\\Users\\liuxin\\git-springdemo\\src\\test\\resources\\petstore-v1.xml");
+		//System.out.println(System.getProperty("user.dir"));//获取当前目录
+		//相对路径
+		Resource r = new FileSystemResource("src\\test\\resources\\petstore-v1.xml");
 
 		InputStream is = null;
 
@@ -44,7 +46,7 @@ public class ResourceTest {
 				is.close();
 			}
 		}
-*/
+
 	}
 
 }

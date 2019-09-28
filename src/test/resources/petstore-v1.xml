@@ -6,7 +6,11 @@
   
   <bean id="petStore"
         class="org.springdemo.service.v1.PetStoreService" >
-  </bean> 
+  </bean>
+
+  <bean id="petStorePrototype"
+        class="org.springdemo.service.v1.PetStoreService" scope ="prototype">
+  </bean>
 
 </beans>
 

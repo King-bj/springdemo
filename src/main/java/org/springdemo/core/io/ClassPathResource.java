@@ -6,6 +6,9 @@ import java.io.InputStream;
 
 import org.springdemo.util.ClassUtils;
 
+/**
+ *
+ */
 public class ClassPathResource implements Resource {
 
 	private String path;

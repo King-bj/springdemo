@@ -42,13 +42,15 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 
 		//如果是单例模式的Bean 就采用单例的初始化bean方法
 		if(bd.isSingleton()){
+			//直接从单例的map中查找，查不到就创建一个 然后返回
 			Object bean = this.getSingleton(beanID);
 			if(bean == null){
 				bean = createBean(bd);
 				this.registerSingleton(beanID, bean);
 			}
 			return bean;
-		} 
+		}
+		//如果不是单例，直接创建和返回
 		return createBean(bd);
 	}
 

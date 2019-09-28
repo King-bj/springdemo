@@ -46,10 +46,17 @@ public class BeanFactoryTest {
 		PetStoreService petStore = (PetStoreService)factory.getBean("petStore");
 		
 		assertNotNull(petStore);
-		
+		//单例的测试
 		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStore");
-		
+
 		assertTrue(petStore.equals(petStore1));
+
+		//非单例的Bean获取测试
+		PetStoreService petStorePrototype = (PetStoreService)factory.getBean("petStorePrototype");
+
+		PetStoreService petStorePrototype1 = (PetStoreService)factory.getBean("petStorePrototype");
+
+		assertFalse(petStorePrototype.equals(petStorePrototype1));
 	}
 	
 	@Test

@@ -10,6 +10,11 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 	
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(64);
 
+	/**
+	 * 单例bean的注册 如果已有抛出异常
+	 * @param beanName
+	 * @param singletonObject
+	 */
 	public void registerSingleton(String beanName, Object singletonObject) {
 		
 		Assert.notNull(beanName, "'beanName' must not be null");

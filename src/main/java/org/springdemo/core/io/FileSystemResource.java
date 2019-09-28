@@ -8,7 +8,9 @@ import java.io.InputStream;
 import org.springdemo.util.Assert;
 
 
-
+/**
+ *  从文件系统读取xml
+ */
 public class FileSystemResource implements Resource {
 
 	private final String path;

@@ -4,8 +4,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springdemo.context.ApplicationContext;
 import org.springdemo.context.support.ClassPathXmlApplicationContext;
+import org.springdemo.context.support.FileSystemXmlApplicationContext;
 import org.springdemo.service.v1.PetStoreService;
 
+
+/**
+ * ApplicationContext 、
+ * 用户直接通过 ApplicationContext 获取 xml和getBean
+ * 不需要关心其他的底层实现
+ */
 public class ApplicationContextTest {
 
 	@Test
@@ -14,12 +21,15 @@ public class ApplicationContextTest {
 		PetStoreService petStore = (PetStoreService)ctx.getBean("petStore");
 		Assert.assertNotNull(petStore);
 	}
+
+
+
     @Test 
 	public void testGetBeanFromFileSystemContext(){
-	    //注意啊，这里仍然是hardcode了一个本地路径，这是不好的实践!! 如何处理
-		/*ApplicationContext ctx = new FileSystemXmlApplicationContext("C:\\Users\\liuxin\\git-springdemo\\src\\test\\resources\\petstore-v1.xml");
+		//相对路径
+		ApplicationContext ctx = new FileSystemXmlApplicationContext("src\\test\\resources\\petstore-v1.xml");
 		PetStoreService petStore = (PetStoreService)ctx.getBean("petStore");
-		Assert.assertNotNull(petStore);*/
+		Assert.assertNotNull(petStore);
 		
 	}
 
