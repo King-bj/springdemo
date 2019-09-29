@@ -1,6 +1,10 @@
 package org.springdemo.beans.factory.support;
 
 import org.springdemo.beans.BeanDefinition;
+import org.springdemo.beans.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericBeanDefinition implements BeanDefinition {
 	private String id;
@@ -8,6 +12,9 @@ public class GenericBeanDefinition implements BeanDefinition {
 	private boolean singleton = true;
 	private boolean prototype = false;
 	private String scope = SCOPE_DEFAULT;
+	//保存xml里所有的property定义
+	List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
+
 	public GenericBeanDefinition(String id, String beanClassName) {
 		
 		this.id = id;
@@ -17,7 +24,11 @@ public class GenericBeanDefinition implements BeanDefinition {
 		
 		return this.beanClassName;
 	}
-	
+
+	public List<PropertyValue> getPropertyValues() {
+		return this.propertyValues;
+	}
+
 	public boolean isSingleton() {
 		return this.singleton;
 	}
