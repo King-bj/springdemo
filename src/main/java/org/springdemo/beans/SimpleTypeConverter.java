@@ -29,7 +29,7 @@ public class SimpleTypeConverter implements TypeConverter {
 		if(ClassUtils.isAssignableValue(requiredType, value)){
 			return (T)value;
 		} else{
-			//xml解析出来的是String
+			//xml解析出来的是Stringc'r
 			if(value instanceof String){
 				//获取一个类型对应的PropertyEditor接口
 				PropertyEditor editor = findDefaultEditor(requiredType);

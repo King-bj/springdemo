@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springdemo.beans.BeanDefinition;
 import org.springdemo.beans.PropertyValue;
 import org.springdemo.beans.SimpleTypeConverter;
@@ -64,9 +65,10 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 	private Object createBean(BeanDefinition bd) {
 		//创建实例
 		Object bean = instantiateBean(bd);
-		//设置属性
-		populateBean(bd, bean);
-
+		//设置属性 自己的写的处理方法
+		//populateBean(bd, bean);
+		//设置属性，commons处理方法
+		populaterBeanUseCommonBeanUtils(bd,bean);
 		return bean;
 
 	}
@@ -132,6 +134,34 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 			throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", ex);
 		}
 	}
+
+	/**
+	 * 用来代替我们自己写的convertedValue方法处理value的值
+	 * @pam bd
+	 * @param bean
+	 */
+	private void populaterBeanUseCommonBeanUtils(BeanDefinition bd, Object bean){
+		List<PropertyValue> pvs  = bd.getPropertyValues();
+
+		if(pvs == null || pvs.isEmpty()){
+			return;
+		}
+
+		BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
+		try {
+			for(PropertyValue pv : pvs){
+				String properName = pv.getName();
+				Object originalValue = pv.getValue();
+
+				Object resolvedValue = valueResolver.resolveValueIfNecessary(originalValue);
+				BeanUtils.setProperty(bean,properName,resolvedValue);
+			}
+		}catch (Exception e){
+			throw new BeanCreationException("Populate bean property failed for {" + bd.getBeanClassName());
+		}
+
+	}
+
 	public void setBeanClassLoader(ClassLoader beanClassLoader) {
 		this.beanClassLoader = beanClassLoader;
 	}
