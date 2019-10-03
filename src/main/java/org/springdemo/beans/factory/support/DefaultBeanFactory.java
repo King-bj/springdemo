@@ -1,16 +1,9 @@
 package org.springdemo.beans.factory.support;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springdemo.beans.BeanDefinition;
-import org.springdemo.beans.PropertyValue;
-import org.springdemo.beans.SimpleTypeConverter;
 import org.springdemo.beans.factory.BeanCreationException;
 import org.springdemo.beans.factory.config.ConfigurableBeanFactory;
 import org.springdemo.util.ClassUtils;
@@ -61,112 +54,22 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 		return createBean(bd);
 	}
 
-
-	private Object createBean(BeanDefinition bd) {
-		//创建实例
-		Object bean = instantiateBean(bd);
-		//设置属性 自己的写的处理方法
-		//populateBean(bd, bean);
-		//设置属性，commons处理方法
-		populaterBeanUseCommonBeanUtils(bd,bean);
-		return bean;
-
-	}
-
 	/**
 	 * 通过ClassLoader 反射的方式 实例化实际的bean
 	 * 假定这个bean有一个无参的构造函数，才能被newInstance()出来
 	 * @param bd
 	 * @return
 	 */
-	private Object instantiateBean(BeanDefinition bd) {
-		if(bd.hasConstructorArgumentValues()){
-			ConstructorResolver resolver = new ConstructorResolver(this);
-			return resolver.autowireConstructor(bd);
-		}else{
-			ClassLoader cl = this.getBeanClassLoader();
-			String beanClassName = bd.getBeanClassName();
-			try {
-				Class<?> clz = cl.loadClass(beanClassName);
-				return clz.newInstance();
-			} catch (Exception e) {
-				throw new BeanCreationException("create bean for "+ beanClassName +" failed",e);
-			}
-		}
-	}
-
-	/**
-	 * 加载bean里引用另一个bean
-	 * @param bd
-	 * @param bean
-	 */
-	protected void populateBean(BeanDefinition bd, Object bean){
-		//获取所有的propertyValues
-		List<PropertyValue> pvs = bd.getPropertyValues();
-
-		if (pvs == null || pvs.isEmpty()) {
-			return;
-		}
-
-		BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
-
-		SimpleTypeConverter converter = new SimpleTypeConverter();
-		try{
-			//拿到bean这个类的相关信息
-			BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-			//拿到属性的描述器
-			PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
-
-			for (PropertyValue pv : pvs){
-				String propertyName = pv.getName();
-				Object originalValue = pv.getValue();
-				////获取value的实例，Bean(RuntimeBeanReference)或者只是一个value(TypedStringValue)
-				Object resolvedValue = valueResolver.resolveValueIfNecessary(originalValue);
-
-				for (PropertyDescriptor pd : pds) {
-					//找到bean对应的propertyName
-					if(pd.getName().equals(propertyName)){
-						Object convertedValue = converter.convertIfNecessary(resolvedValue, pd.getPropertyType());
-						//反射set值
-						pd.getWriteMethod().invoke(bean, convertedValue);
-						break;
-					}
-				}
-
-
-			}
-		}catch(Exception ex){
-			throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", ex);
-		}
-	}
-
-	/**
-	 * 用来代替我们自己写的convertedValue方法处理value的值
-	 * @pam bd
-	 * @param bean
-	 */
-	private void populaterBeanUseCommonBeanUtils(BeanDefinition bd, Object bean){
-		List<PropertyValue> pvs  = bd.getPropertyValues();
-
-		if(pvs == null || pvs.isEmpty()){
-			return;
-		}
-
-		BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
+	private Object createBean(BeanDefinition bd) {
+		ClassLoader cl = this.getBeanClassLoader();
+		String beanClassName = bd.getBeanClassName();
 		try {
-			for(PropertyValue pv : pvs){
-				String properName = pv.getName();
-				Object originalValue = pv.getValue();
-
-				Object resolvedValue = valueResolver.resolveValueIfNecessary(originalValue);
-				BeanUtils.setProperty(bean,properName,resolvedValue);
-			}
-		}catch (Exception e){
-			throw new BeanCreationException("Populate bean property failed for {" + bd.getBeanClassName());
-		}
-
+			Class<?> clz = cl.loadClass(beanClassName);
+			return clz.newInstance();
+		} catch (Exception e) {			
+			throw new BeanCreationException("create bean for "+ beanClassName +" failed",e);
+		}	
 	}
-
 	public void setBeanClassLoader(ClassLoader beanClassLoader) {
 		this.beanClassLoader = beanClassLoader;
 	}
