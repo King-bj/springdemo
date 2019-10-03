@@ -1,6 +1,7 @@
 package org.springdemo.beans.factory.support;
 
 import org.springdemo.beans.BeanDefinition;
+import org.springdemo.beans.ConstructorArgument;
 import org.springdemo.beans.PropertyValue;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 	private String scope = SCOPE_DEFAULT;
 	//保存xml里所有的property定义
 	List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
+	private ConstructorArgument constructorArgument = new ConstructorArgument();
 
 	public GenericBeanDefinition(String id, String beanClassName) {
 		
@@ -27,6 +29,10 @@ public class GenericBeanDefinition implements BeanDefinition {
 
 	public List<PropertyValue> getPropertyValues() {
 		return this.propertyValues;
+	}
+
+	public ConstructorArgument getConstructorArgument() {
+		return this.constructorArgument;
 	}
 
 	public boolean isSingleton() {
@@ -45,4 +51,11 @@ public class GenericBeanDefinition implements BeanDefinition {
 		
 	}
 
+	public String getID() {
+		return this.id;
+	}
+
+	public boolean hasConstructorArgumentValues() {
+		return !this.constructorArgument.isEmpty();
+	}
 }
