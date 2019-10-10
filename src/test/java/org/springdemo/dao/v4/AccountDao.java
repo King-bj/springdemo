@@ -1,6 +1,6 @@
-package org.litespring.dao.v4;
+package org.springdemo.dao.v4;
 
-import org.litespring.stereotype.Component;
+import org.springdemo.stereotype.Component;
 
 @Component
 public class AccountDao {

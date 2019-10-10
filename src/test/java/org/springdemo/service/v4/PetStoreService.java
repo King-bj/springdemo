@@ -1,9 +1,9 @@
-package org.litespring.service.v4;
+package org.springdemo.service.v4;
 
-import org.litespring.beans.factory.annotation.Autowired;
-import org.litespring.dao.v3.AccountDao;
-import org.litespring.dao.v3.ItemDao;
-import org.litespring.stereotype.Component;
+import org.springdemo.beans.factory.annotation.Autowired;
+import org.springdemo.dao.v3.AccountDao;
+import org.springdemo.dao.v3.ItemDao;
+import org.springdemo.stereotype.Component;
 
 @Component(value="petStore")
 

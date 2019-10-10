@@ -1,14 +1,14 @@
-package org.litespring.test.v4;
+package org.springdemo.test.v4;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.litespring.beans.BeanDefinition;
-import org.litespring.beans.factory.support.DefaultBeanFactory;
-import org.litespring.context.annotation.ClassPathBeanDefinitionScanner;
-import org.litespring.context.annotation.ScannedGenericBeanDefinition;
-import org.litespring.core.annotation.AnnotationAttributes;
-import org.litespring.core.type.AnnotationMetadata;
-import org.litespring.stereotype.Component;
+import org.springdemo.beans.BeanDefinition;
+import org.springdemo.beans.factory.support.DefaultBeanFactory;
+import org.springdemo.context.annotation.ClassPathBeanDefinitionScanner;
+import org.springdemo.context.annotation.ScannedGenericBeanDefinition;
+import org.springdemo.core.annotation.AnnotationAttributes;
+import org.springdemo.core.type.AnnotationMetadata;
+import org.springdemo.stereotype.Component;
 
 public class ClassPathBeanDefinitionScannerTest {
 	
@@ -17,7 +17,7 @@ public class ClassPathBeanDefinitionScannerTest {
 		
 		DefaultBeanFactory factory = new DefaultBeanFactory();
 		
-		String basePackages = "org.litespring.service.v4,org.litespring.dao.v4";
+		String basePackages = "org.springdemo.service.v4,org.springdemo.dao.v4";
 		
 		ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(factory);
 		scanner.doScan(basePackages);

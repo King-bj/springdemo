@@ -1,16 +1,16 @@
-package org.litespring.test.v4;
+package org.springdemo.test.v4;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.litespring.beans.BeanDefinition;
-import org.litespring.beans.factory.support.DefaultBeanFactory;
-import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
-import org.litespring.context.annotation.ScannedGenericBeanDefinition;
-import org.litespring.core.annotation.AnnotationAttributes;
-import org.litespring.core.io.ClassPathResource;
-import org.litespring.core.io.Resource;
-import org.litespring.core.type.AnnotationMetadata;
-import org.litespring.stereotype.Component;
+import org.springdemo.beans.BeanDefinition;
+import org.springdemo.beans.factory.support.DefaultBeanFactory;
+import org.springdemo.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springdemo.context.annotation.ScannedGenericBeanDefinition;
+import org.springdemo.core.annotation.AnnotationAttributes;
+import org.springdemo.core.io.ClassPathResource;
+import org.springdemo.core.io.Resource;
+import org.springdemo.core.type.AnnotationMetadata;
+import org.springdemo.stereotype.Component;
 
 public class XmlBeanDefinitionReaderTest {
 
